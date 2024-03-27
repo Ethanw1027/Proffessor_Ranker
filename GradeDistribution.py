@@ -26,22 +26,24 @@ class GradeDistribution:
     
     def get_prof_rating(self, prof_name):
         prof = ratemyprofessor.get_professor_by_school_and_name(school, prof_name)
+        if not prof:
+            return None
         return prof.rating
 
-#    def rank_profs(self, course_dept, course_num):
-#        course_data = self.search_class(course_dept, course_num)
-#        prof_data = self.get_prof_gpas(course_data)
-#        
-#        prof_ratings = []
-#        for prof_name, gpa in prof_data.items():
-#            rating = self.get_prof_rating(prof_name)
-#            prof_ratings.append({"Name": prof_name, "GPA": gpa, "Rating": rating})
-#        
-#        ranked_df = pd.DataFrame(prof_ratings)
-#        return ranked_df
-
+    def rank_profs(self, class_str):
+        class_str = class_str.split()
+        course_dept, course_num = class_str[0], class_str[1]
+        course_data = self.search_class(course_dept, course_num)
+        prof_data = self.get_prof_gpas(course_data)
+        
+        prof_ratings = []
+        for prof_name, gpa in prof_data.items():
+            rating = self.get_prof_rating(prof_name)
+            prof_ratings.append({"Name": prof_name, "GPA": gpa, "Rating": rating})
+        
+        ranked_df = pd.DataFrame(prof_ratings)
+        return ranked_df
 
 grade_dist = GradeDistribution(grades_data_file)
-#print(grade_dist.rank_profs("CS", "2114"))
-
-#grade_dist.get_prof_rating("Esakia")
+class_str = input("Search class: ")
+print(grade_dist.rank_profs(class_str))

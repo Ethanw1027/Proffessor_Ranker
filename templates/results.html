@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Class Ranker Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ebebeb;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #8B0000; /* Mid-shade Maroon */
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #FFA500; /* Orange */
+            color: #fff;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        a {
+            color: #8B0000; /* Mid-shade Maroon */
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+        }
+        a:hover {
+            color: #FF8C00; /* Darker Orange on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Results for {{ class_str }}</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>GPA</th>
+                    <th>Rating</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for index, row in ranked_df.iterrows() %}
+                <tr>
+                    <td>{{ row['Name'] }}</td>
+                    <td>{{ row['GPA'] }}</td>
+                    <td>{{ row['Rating'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="/">Back</a>
+    </div>
+</body>
+</html>

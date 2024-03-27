@@ -7,10 +7,8 @@ grades_data_file = "databases/grades.csv"
 class GradeDistribution:
     def __init__(self, grades_data_file):
         self.df = pd.read_csv(grades_data_file)
-    
-    def list_depts(self):
-        dept_list = self.df["Subject"].unique()
-        return list(dept_list)
+        #dept_list = self.df["Subject"]
+        #self.dept_list = set(dept_list)
     
     def search_class(self, course_dept, course_num):
         course_data = self.df
@@ -43,7 +41,3 @@ class GradeDistribution:
         
         ranked_df = pd.DataFrame(prof_ratings)
         return ranked_df
-
-grade_dist = GradeDistribution(grades_data_file)
-class_str = input("Search class: ")
-print(grade_dist.rank_profs(class_str))

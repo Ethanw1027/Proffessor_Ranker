@@ -1,26 +1,30 @@
-from flask import Flask, render_template, request, redirect, session
+from flask import Flask, render_template, request, redirect, url_for
 import pandas as pd
+import ratemyprofessor
 from GradeDistribution import GradeDistribution
 
+# Initialize Flask app
 app = Flask(__name__)
-app.secret_key = 'supersecretkey'  # Required for session management
-grades_data_file = "databases/grades.csv"
 
+# Load data and set up GradeDistribution class
+grades_data_file = "databases/grades.csv"
+school = ratemyprofessor.get_school_by_name("Virginia Tech")
+
+# Initialize GradeDistribution
 grade_dist = GradeDistribution(grades_data_file)
 
+# Define routes
 @app.route('/', methods=['GET', 'POST'])
-def prof_search():
-    return render_template('prof_search.html', ranked_profs=None)
+def index():
     if request.method == 'POST':
-        course_dept = request.form['course_dept']
-        course_num = request.form['course_num']
-        course_data = grade_dist.search_class(course_dept, course_num)
-        
-        if not course_data.empty:
-            ranked_profs = grade_dist.rank_profs(course_data)
-            return render_template('prof_search.html', ranked_profs=ranked_profs)
-    else:
-        return render_template('prof_search.html', ranked_profs=None)
+        class_str = request.form['class_str']
+        return redirect(url_for('results', class_str=class_str))
+    return render_template('index.html')
+
+@app.route('/results/<class_str>')
+def results(class_str):
+    ranked_df = grade_dist.rank_profs(class_str)
+    return render_template('results.html', ranked_df=ranked_df)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
+    app.run(debug=True)

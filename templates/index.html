@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Class Ranker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ebebeb;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #8B0000; /* Mid-shade Maroon */
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        input[type="submit"] {
+            background-color: #FFA500; /* Orange */
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #FF8C00; /* Darker Orange on hover */
+        }
+        /* Loading animation */
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 4px solid #FFA500; /* Orange */
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            display: none; /* Hidden initially */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: -15px;
+            margin-left: -15px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        /* Center text and thinner text box */
+        h1, form {
+            text-align: center; /* Center text */
+        }
+        input[type="text"] {
+            width: 30%; /* Make text box thinner */
+            max-width: 100px; /* Set maximum width */
+            margin: 0 auto; /* Center text box */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Search for a Class</h1>
+        <form id="searchForm" method="POST" action="/">
+            <label for="class_str">Enter class (e.g., CS 2114):</label>
+            <input type="text" id="class_str" name="class_str">
+            <input type="submit" id="searchBtn" value="Search">
+        </form>
+        <div class="loader" id="loader"></div> <!-- Loading animation -->
+    </div>
+
+    <script>
+        // JavaScript to toggle loading animation on form submit
+        document.getElementById('searchForm').addEventListener('submit', function() {
+            document.getElementById('loader').style.display = 'block'; // Show loader
+        });
+    </script>
+</body>
+</html>
